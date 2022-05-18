@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import {useLoginUserMutation} from "../services/authApi"
 
 const initialState = {
   firstName: "",
@@ -13,10 +15,26 @@ const Auth = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [showRegister, setShowRegister] = useState(false);
   const { firstName, lastName, email, password, confirmPassword } = formValue;
-  
+  const [loginUser, {data: loginData,isSuccess: isLoginSuccess, isError: isError, error: loginError}]= useLoginUserMutation();
+
+  const navigate =useNavigate();
+
   const handleChange = (e:any) => {
     setFormValue({...formValue, [e.target.name]: e.target.value})
   };
+  const handleLogin= async ()=>{
+      if(email && password){
+         await loginUser({email,password})
+      }else {
+        toast.error("please fill all Input field")
+      }
+  }
+  useEffect(()=>{
+    if(isLoginSuccess){
+      toast.success("User Login Successfully");
+      navigate("/dashboard")
+    }
+  },[isLoginSuccess])
 
   return (
     <Container>
@@ -134,7 +152,7 @@ const Auth = () => {
 
                   <Col md="12" className="mt-5">
                     {!showRegister ? (
-                      <Button>Login</Button>
+                      <Button onClick={()=> handleLogin()}>Login</Button>
                     ) : (
                       <Button>Register</Button>
                     )}
