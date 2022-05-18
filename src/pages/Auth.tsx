@@ -56,6 +56,15 @@ const Auth = () => {
     }
   },[isLoginSuccess, isRegisterSuccess])
 
+ useEffect(()=>{
+  if(isLoginError){
+    toast.error((loginError as any).data.message);
+  }
+  if(isRegisterError){
+    toast.error((registerError as any).data.message);
+  }
+ },[isLoginError,isRegisterError])
+
   return (
     <Container>
       <Card className="mt-5">

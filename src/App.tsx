@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useAppDispatch } from './app/hooks';
 import { useEffect } from 'react';
 import { setUser } from './features/authSlice';
+import PrivateRoute from './components/PrivateRoute';
 
 
 function App() {
@@ -17,7 +18,7 @@ function App() {
   useEffect(()=>{
     dispatch(setUser(user));
   },[])
-  
+
   return (
     <div className="App">
       
@@ -25,8 +26,8 @@ function App() {
        <ToastContainer/>
          <Routes>
             <Route path="/" element={<Navigate to="/auth" replace />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/auth" element={ <PrivateRoute><Auth /></PrivateRoute>} />
+            <Route path="/dashboard" element={<PrivateRoute> <Dashboard/></PrivateRoute>} />
          </Routes>
        </BrowserRouter>
 
