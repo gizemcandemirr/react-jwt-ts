@@ -5,7 +5,8 @@ Project url: https://react-jwt-ts.vercel.app/auth
 
 ## Project Tech Include
 * React JWT Authentication, RTK Query | RTK Query Auth | Redux-Toolkit | React TypeScript
-* 
+
+
 ## How to Project Start?
 * npm install create-react-app react-jwt-ts --template redux-typescript
 * npm install react-bootstrap bootstrap react-router-dom react-toastify
