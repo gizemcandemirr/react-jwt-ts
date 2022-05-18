@@ -13,7 +13,10 @@ const Auth = () => {
   const [formValue, setFormValue] = useState(initialState);
   const [showRegister, setShowRegister] = useState(false);
   const { firstName, lastName, email, password, confirmPassword } = formValue;
-  const handleChange = () => {};
+  
+  const handleChange = (e:any) => {
+    setFormValue({...formValue, [e.target.name]: e.target.value})
+  };
 
   return (
     <Container>
