@@ -5,9 +5,19 @@ import Dashboard from './pages/Dashboard';
 import {ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useAppDispatch } from './app/hooks';
+import { useEffect } from 'react';
+import { setUser } from './features/authSlice';
 
 
 function App() {
+  const dispatch =useAppDispatch();
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  useEffect(()=>{
+    dispatch(setUser(user));
+  },[])
+  
   return (
     <div className="App">
       

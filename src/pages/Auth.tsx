@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAppDispatch } from "../app/hooks";
+import { setUser } from "../features/authSlice";
 import {useLoginUserMutation} from "../services/authApi"
 
 const initialState = {
@@ -16,6 +18,7 @@ const Auth = () => {
   const [showRegister, setShowRegister] = useState(false);
   const { firstName, lastName, email, password, confirmPassword } = formValue;
   const [loginUser, {data: loginData,isSuccess: isLoginSuccess, isError: isError, error: loginError}]= useLoginUserMutation();
+  const dispatch=useAppDispatch();
 
   const navigate =useNavigate();
 
@@ -32,6 +35,7 @@ const Auth = () => {
   useEffect(()=>{
     if(isLoginSuccess){
       toast.success("User Login Successfully");
+      dispatch(setUser({name: loginData.result.name, token: loginData.token }))
       navigate("/dashboard")
     }
   },[isLoginSuccess])
